@@ -1,0 +1,27 @@
+<div class="login-container">
+  <header class="login-header">
+    <h1>Welcome Back to ProjectXF</h1>
+    <p>Please enter your credentials to log in and continue your journey.</p>
+  </header>
+
+  <section class="login-form">
+    <form (ngSubmit)="onSubmit()">
+      <div class="input-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" [(ngModel)]="username" required>
+      </div>
+
+      <div class="input-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" [(ngModel)]="password" required>
+      </div>
+
+      <button type="submit">Log In</button>
+    </form>
+  </section>
+
+  <footer class="login-footer">
+    <p>Don't have an account? <a href="#" (click)="goToSignup()">Sign Up Here</a></p>
+    <button (click)="goToHome()">Back to Home</button>
+  </footer>
+</div>

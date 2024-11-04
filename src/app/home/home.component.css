@@ -1,0 +1,71 @@
+/* General Layout */
+.home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+    background: linear-gradient(135deg, #4f79e8, #34c9eb);
+    color: #fff;
+    text-align: center;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Header Styling */
+  .home-header h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+  }
+  
+  .home-header p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 0 auto 20px;
+  }
+  
+  /* Card Section */
+  .home-cards {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .card {
+    background: #fff;
+    color: #333;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    text-align: center;
+  }
+  
+  .card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .card p {
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+  
+  /* Button Styling */
+  button {
+    background: #4f79e8;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  button:hover {
+    background: #3656a7;
+  }
+  
