@@ -17,24 +17,24 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16' 
+          node-version: '16'
 
       - name: Install dependencies
         run: npm install
 
-      - name: Run tests
+      - name: Run tests with ChromeHeadless
         run: npm test
 
       - name: Build project
         run: npm run build
         if: success() 
-    
+
       - name: Upload build artifacts
         if: success()
         uses: actions/upload-artifact@v3
         with:
           name: build-output
-          path: dist/ 
+          path: dist/
 
       - name: Cleaning up
         if: success()
