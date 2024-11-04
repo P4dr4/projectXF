@@ -1,0 +1,41 @@
+name: Node Setup Workflow
+
+on:
+  push:
+    branches:
+      - feature/*
+
+jobs:
+  node-setup:
+    name: Set Up Node Environment
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16' 
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+
+      - name: Build project
+        run: npm run build
+        if: success() 
+    
+      - name: Upload build artifacts
+        if: success()
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-output
+          path: dist/ 
+
+      - name: Cleaning up
+        if: success()
+        run: rm -rf dist
