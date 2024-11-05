@@ -23,7 +23,7 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['ChromeHeadless'],  // Change from 'Chrome' to 'ChromeHeadless'
+    browsers: ['ChromeHeadless'],
     singleRun: false,
     restartOnFileChange: true
   });
