@@ -10,7 +10,7 @@ on:
       - main
 
 jobs:
-  node-ci:
+  Node_CI:
     runs-on: ubuntu-latest
 
     steps:
@@ -41,4 +41,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: build-artifacts
-          path: build/
+          path: ./build
