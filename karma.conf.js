@@ -11,7 +11,7 @@ module.exports = function (config) {
       require('@angular-devkit/build-angular/plugins/karma')
     ],
     client: {
-      clearContext: false, // deixa a saída do Jasmine visível no navegador
+      clearContext: false,
     },
     coverageReporter: {
       dir: require('path').join(__dirname, './coverage/project-xf'),
@@ -24,7 +24,7 @@ module.exports = function (config) {
     logLevel: config.LOG_INFO,
     autoWatch: true,
     browsers: ['ChromeHeadless'],
-    singleRun: true, // Define o Karma para rodar uma vez e finalizar
+    singleRun: true,
     restartOnFileChange: true
   });
 };
