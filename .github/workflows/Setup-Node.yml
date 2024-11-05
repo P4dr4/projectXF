@@ -5,11 +5,17 @@ on:
     branches:
       - main
       - feature/*
+  pull_request:
+    branches:
+      - main
 
 jobs:
   node-ci:
-    name: Set Up Node Environment
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16, 18, 20]
 
     steps:
       - name: Checkout repository
@@ -18,15 +24,25 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: ‘${{ matrix.node-version }}’
+          cache: 'npm'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Install Chrome dependencies
+      - name: Install Chrome dependencies on Runner (Ubuntu)
         run: |
           sudo apt-get update
           sudo apt-get install -y libnss3 libgconf-2-4
 
       - name: Run tests
-        run: npm test
+        run: npm test -- --ci
+
+      - name: Build application
+        run: npm run build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifacts
+          path: build/
