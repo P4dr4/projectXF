@@ -1,5 +1,3 @@
-process.env.CHROME_BIN = require('puppeteer').executablePath();
-
 module.exports = function (config) {
   config.set({
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
@@ -23,10 +21,10 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: false,
-    singleRun: true, // Executa uma vez e finaliza
+    singleRun: true, 
     browsers: ['ChromeHeadless'],
-    browserDisconnectTimeout: 100,  // Timeout para desconectar o navegador
-    browserNoActivityTimeout: 10, 
-    restartOnFileChange: false // Evita reinicializações
+    browserDisconnectTimeout: 100000, 
+    browserNoActivityTimeout: 100000, 
+    restartOnFileChange: false
   });
 };

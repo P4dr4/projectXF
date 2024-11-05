@@ -29,11 +29,4 @@ jobs:
           sudo apt-get install -y libnss3 libgconf-2-4
 
       - name: Run tests
-        run: |
-          UNITY_TESTS=$(npm test --watch=false)
-      
-          if [ -n "$UNITY_TESTS" ]; then
-            exit 0
-          else
-            exit 1
-          fi
+        run: npm test
