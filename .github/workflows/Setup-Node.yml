@@ -30,9 +30,9 @@ jobs:
 
       - name: Run tests
         run: |
-          UNITY_TESTS=$(npm test)
+          UNITY_TESTS=$(npm test --watch=false)
       
-          if [ "$UNITY_TESTS" ]; then
+          if [ -n "$UNITY_TESTS" ]; then
             exit 0
           else
             exit 1
