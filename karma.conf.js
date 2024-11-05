@@ -25,6 +25,8 @@ module.exports = function (config) {
     autoWatch: false,
     singleRun: true, // Executa uma vez e finaliza
     browsers: ['ChromeHeadless'],
+    browserDisconnectTimeout: 100,  // Timeout para desconectar o navegador
+    browserNoActivityTimeout: 10, 
     restartOnFileChange: false // Evita reinicializações
   });
 };
