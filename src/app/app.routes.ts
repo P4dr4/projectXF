@@ -4,15 +4,20 @@ import { LoginComponent } from './login/login.component';
 import { NgModule } from '@angular/core';
 import { HomeComponent } from './home/home.component';
 import { InfoComponent } from './info/info.component';
+import { SignupComponent } from './signup/signup.component';
+import { HubComponent } from './hub/hub.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'info', component: InfoComponent}
+  { path: 'info', component: InfoComponent},
+  { path: 'signup', component: SignupComponent},
+  { path: 'hub', component: HubComponent}
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
+
 export class AppRoutingModule {}
