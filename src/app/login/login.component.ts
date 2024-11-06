@@ -28,7 +28,7 @@ export class LoginComponent {
   }
 
   goToSignup(): void {
-    console.log('Sign Up');
+    this.router.navigate(['/signup']);
   }
 
   onSubmit(): void {

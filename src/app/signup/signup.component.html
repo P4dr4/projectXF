@@ -1,0 +1,52 @@
+<div class="signup-page">
+  <div class="info-section">
+    <h2>Welcome to Our Platform</h2>
+    <p>Join us and enjoy the benefits of our community. Here you can find various resources and connect with like-minded individuals.</p>
+    <button (click)="goToHome()">Back to Home</button>
+  </div>
+  <div class="signup-container">
+    <h2>Create Your Account</h2>
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" novalidate aria-label="Signup form">
+      <!-- Username -->
+      <div class="form-group" [ngClass]="{'error': username?.invalid && (username?.touched || username?.dirty)}">
+        <label for="username">Username</label>
+        <input type="text" id="username" formControlName="username" placeholder="Enter your username" aria-required="true" aria-invalid="false">
+        <small class="error-message" *ngIf="username?.errors?.['required']">Username is required</small>
+      </div>
+      <!-- Email -->
+      <div class="form-group" [ngClass]="{'error': email?.invalid && (email?.touched || email?.dirty)}">
+        <label for="email">Email</label>
+        <input type="email" id="email" formControlName="email" placeholder="Enter your email" aria-required="true" aria-invalid="false">
+        <small class="error-message" *ngIf="email?.errors?.['required']">Email is required</small>
+        <small class="error-message" *ngIf="email?.errors?.['email']">Email is not valid</small>
+      </div>
+      <!-- Password -->
+      <div class="form-group" [ngClass]="{'error': password?.invalid && (password?.touched || password?.dirty)}">
+        <label for="password">Password</label>
+          <input [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password" placeholder="Enter your password" aria-required="true">
+          <i class="toggle-password fas" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'" (click)="togglePasswordVisibility('password')" aria-label="Toggle password visibility"></i>
+          <small class="error-message" *ngIf="password?.errors?.['required']">Password is required</small>
+          <div id="password-strength-meter" [ngClass]="passwordStrengthClass"></div>
+          <small id="password-strength-text">{{ passwordStrengthText }}</small>
+      </div>
+      <!-- Confirm Password -->
+      <div class="form-group" [ngClass]="{'error': confirmPassword?.invalid && (confirmPassword?.touched || confirmPassword?.dirty)}">
+        <label for="confirmPassword">Confirm Password</label>
+          <input [type]="showConfirmPassword ? 'text' : 'password'" id="confirmPassword" formControlName="confirmPassword" placeholder="Confirm your password" aria-required="true">
+          <i class="toggle-password fas" [ngClass]="showConfirmPassword ? 'fa-eye-slash' : 'fa-eye'" (click)="togglePasswordVisibility('confirmPassword')" aria-label="Toggle confirm password visibility"></i>
+          <small class="error-message" *ngIf="confirmPassword?.errors?.['required']">Please confirm your password</small>
+          <small class="error-message" *ngIf="confirmPassword?.errors?.['mismatch']">Passwords do not match</small>
+      </div>
+      <!-- Terms -->
+      <div class="form-group" [ngClass]="{'error': terms?.invalid && (terms?.touched || terms?.dirty)}">
+        <label>
+          <input type="checkbox" formControlName="terms" aria-required="true">
+          I agree to the terms and conditions
+        </label>
+        <small class="error-message" *ngIf="terms?.errors?.['required']">You must agree to the terms</small>
+      </div>
+      <!-- Submit Button -->
+      <button type="submit" [disabled]="signupForm.invalid">Sign Up</button>
+    </form>
+  </div>
+</div>
