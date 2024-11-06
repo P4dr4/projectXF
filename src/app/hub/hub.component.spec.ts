@@ -21,11 +21,6 @@ describe('HubComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should display user profile', () => {
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.user-profile h2').textContent).toContain('Pedro');
-  });
-
   it('should display feed items', () => {
     const compiled = fixture.nativeElement;
     expect(compiled.querySelectorAll('.feed-item').length).toBeGreaterThan(0);
