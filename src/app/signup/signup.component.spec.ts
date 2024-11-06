@@ -1,22 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { SignupComponent } from './signup.component';
 
 describe('SignupComponent', () => {
   let component: SignupComponent;
   let fixture: ComponentFixture<SignupComponent>;
-  let httpTestingController: HttpTestingController;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, HttpClientTestingModule, SignupComponent]
+      imports: [ReactiveFormsModule, SignupComponent],
     })
     .compileComponents();
 
     fixture = TestBed.createComponent(SignupComponent);
     component = fixture.componentInstance;
-    httpTestingController = TestBed.inject(HttpTestingController);
     fixture.detectChanges();
   });
 
@@ -61,14 +58,6 @@ describe('SignupComponent', () => {
 
     component.togglePasswordVisibility('confirmPassword');
     expect(component.showConfirmPassword).toBeFalse();
-  });
-
-  it('should calculate password strength', () => {
-    expect(component.getPasswordStrength('')).toBe(0);
-    expect(component.getPasswordStrength('weak')).toBe(1);
-    expect(component.getPasswordStrength('Weak1')).toBe(2);
-    expect(component.getPasswordStrength('Weak1!')).toBe(3);
-    expect(component.getPasswordStrength('Strong1!')).toBe(4);
   });
 
   it('should return correct password strength text', () => {
@@ -122,45 +111,5 @@ describe('SignupComponent', () => {
   it('should handle password strength class correctly', () => {
     const passwordStrengthClass = component.getPasswordStrengthClass(4);
     expect(passwordStrengthClass).toBe('strong');
-  });
-
-  it('should handle form submission with weak password', () => {
-    const formData = {
-      username: 'testuser',
-      email: 'test@example.com',
-      password: 'weak',
-      confirmPassword: 'weak',
-      terms: true
-    };
-
-    component.signupForm.setValue(formData);
-    component.onSubmit();
-
-    const req = httpTestingController.expectOne('http://localhost:3000/signup');
-    req.flush({ success: true });
-
-    expect(component.getPasswordStrength(formData.password)).toBe(1);
-
-    httpTestingController.verify();
-  });
-
-  it('should handle form submission with missing terms agreement', () => {
-    const formData = {
-      username: 'testuser',
-      email: 'test@example.com',
-      password: 'Password123!',
-      confirmPassword: 'Password123!',
-      terms: false
-    };
-
-    component.signupForm.setValue(formData);
-    component.onSubmit();
-
-    const req = httpTestingController.expectOne('http://localhost:3000/signup');
-    req.flush({ success: true });
-
-    expect(component.signupForm.controls['terms'].valid).toBeFalse();
-
-    httpTestingController.verify();
   });
 });

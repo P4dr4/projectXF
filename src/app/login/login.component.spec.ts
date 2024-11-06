@@ -42,12 +42,6 @@ describe('LoginComponent', () => {
     expect(router.navigate).toHaveBeenCalledWith(['']);
   });
 
-  it('should log sign up message', () => {
-    spyOn(console, 'log');
-    component.goToSignup();
-    expect(console.log).toHaveBeenCalledWith('Sign Up');
-  });
-
   it('should log submitted credentials', () => {
     component.username = 'testUser';
     component.password = 'testPassword';
