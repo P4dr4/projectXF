@@ -39,7 +39,7 @@ export class LoginComponent {
       .subscribe(
         response => {
           console.log('Login successful', response);
-          this.router.navigate(['']);
+          this.router.navigate(['/hub']); 
         },
         error => {
           console.error('Login failed', error);

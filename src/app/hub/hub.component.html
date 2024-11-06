@@ -1,0 +1,63 @@
+<div class="container">
+  <header class="header">
+    <nav class="navbar">
+      <a href="#" class="nav-link">Home</a>
+      <a href="#" class="nav-link">Profile</a>
+      <a href="#" class="nav-link">Settings</a>
+      <a href="#" class="nav-link">Logout</a>
+    </nav>
+    <h1>Welcome to the Hub</h1>
+    <input type="text" placeholder="Search..." class="search-bar">
+  </header>
+
+  <div class="content">
+    <aside class="sidebar">
+      <h3>Quick Links</h3>
+      <ul>
+        <li><a href="#">Dashboard</a></li>
+        <li><a href="#">Messages</a></li>
+        <li><a href="#">Notifications</a></li>
+        <li><a href="#">Friends</a></li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <div class="user-profile">
+        <img [src]="user.avatar" alt="{{ user.name }}" class="avatar">
+        <h2>{{ user.name }}</h2>
+        <p>{{ user.bio }}</p>
+        <p>{{ user.location }}</p>
+        <a [href]="user.website" target="_blank">{{ user.website }}</a>
+      </div>
+
+      <div class="feed">
+        <h3>Feed</h3>
+        <div *ngFor="let item of feed" class="feed-item">
+          <p>{{ item.content }}</p>
+          <small>{{ item.timestamp }}</small>
+        </div>
+      </div>
+    </main>
+
+    <aside class="notifications">
+      <h3>Notifications</h3>
+      <ul>
+        <li *ngFor="let notification of notifications">{{ notification }}</li>
+      </ul>
+    </aside>
+  </div>
+
+  <div class="chat">
+    <h3>Chat</h3>
+    <div class="chat-messages">
+      <div *ngFor="let message of chatMessages" class="chat-message">
+        <strong>{{ message.user }}:</strong> {{ message.text }}
+      </div>
+    </div>
+    <input type="text" placeholder="Type a message..." class="chat-input">
+  </div>
+
+  <footer class="footer">
+    <p>&copy; 2023 Pedro A B Azevedo. All rights reserved.</p>
+  </footer>
+</div>

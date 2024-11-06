@@ -47,8 +47,7 @@ describe('LoginComponent', () => {
     component.password = 'testPassword';
     spyOn(console, 'log');
     component.onSubmit();
-    expect(console.log).toHaveBeenCalledWith('Submitted');
-    expect(console.log).toHaveBeenCalledWith('Username:', 'testUser');
-    expect(console.log).toHaveBeenCalledWith('Password:', 'testPassword');
+    expect(console.log).toHaveBeenCalledWith('Attempting login with username: testUser and password: testPassword');
   });
+
 });
