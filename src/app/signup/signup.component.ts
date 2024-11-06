@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css'],
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule]
+  imports: [ReactiveFormsModule, CommonModule, HttpClientModule]
 })
 export class SignupComponent implements OnInit {
   signupForm: FormGroup;
@@ -19,7 +20,7 @@ export class SignupComponent implements OnInit {
   showPassword: boolean = false;
   showConfirmPassword: boolean = false;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder, private router: Router, private http: HttpClient) {
     this.signupForm = this.fb.group({
       username: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
@@ -95,9 +96,17 @@ export class SignupComponent implements OnInit {
 
   onSubmit(): void {
     if (this.signupForm.valid) {
-      console.log('Form submitted', this.signupForm.value);
-      alert('Form submitted successfully!');
-      this.signupForm.reset();
+      console.log('Submitting form', this.signupForm.value); // Log form data before sending
+      this.http.post('http://localhost:3000/signup', this.signupForm.value).subscribe(
+        response => {
+          console.log('Form submitted', response);
+          alert('Form submitted successfully!');
+          this.signupForm.reset();
+        },
+        error => {
+          console.error('Error submitting form', error);
+        }
+      );
     } else {
       this.signupForm.markAllAsTouched();
     }
