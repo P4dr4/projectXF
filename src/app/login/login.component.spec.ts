@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { LoginComponent } from './login.component';
 import { FormsModule } from '@angular/forms';
 
@@ -11,16 +12,18 @@ describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let router: MockRouter;
+  let httpMock: HttpTestingController;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LoginComponent, FormsModule],
+      imports: [LoginComponent, FormsModule, HttpClientTestingModule],
       providers: [{ provide: Router, useClass: MockRouter }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
     router = TestBed.inject(Router) as any;
+    httpMock = TestBed.inject(HttpTestingController);
   });
 
   it('should create', () => {

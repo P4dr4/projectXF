@@ -23,7 +23,7 @@ describe('HubComponent', () => {
 
   it('should display user profile', () => {
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.user-profile h2').textContent).toContain('John Doe');
+    expect(compiled.querySelector('.user-profile h2').textContent).toContain('Pedro');
   });
 
   it('should display feed items', () => {
