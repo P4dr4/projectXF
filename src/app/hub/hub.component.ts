@@ -24,6 +24,7 @@ export class HubComponent implements AfterViewInit, OnDestroy {
   isMenuOpen = false;
   isLoading = false;
   selectedNotification = '';
+  newRepositoryName = '';
 
   user: any = {
     avatar: '',
@@ -179,5 +180,25 @@ export class HubComponent implements AfterViewInit, OnDestroy {
       }, error => {
         console.error('Error adding framework:', error);
       });
+  }
+
+  createGithubRepository(): void {
+    if (!this.user.name || !this.newRepositoryName.trim()) {
+      console.log('User not logged in or repository name empty');
+      return;
+    }
+    
+    this.http.post('http://localhost:3000/github', {
+      username: this.user.name,
+      repository: this.newRepositoryName
+    }).subscribe(
+      response => {
+        console.log('Repository created:', response);
+        this.newRepositoryName = '';
+      },
+      error => {
+        console.error('Error creating repository:', error);
+      }
+    );
   }
 }

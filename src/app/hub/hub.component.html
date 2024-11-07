@@ -119,6 +119,16 @@
           <i class="fas fa-users"></i>
           Find Teams
         </button>
+        <div class="github-repo-creator">
+          <input type="text" 
+                 [(ngModel)]="newRepositoryName" 
+                 placeholder="New repository name"
+                 class="repo-input">
+          <button class="action-button" (click)="createGithubRepository()">
+            <i class="fab fa-github"></i>
+            Create Repository
+          </button>
+        </div>
       </div>
     </div>
 
