@@ -14,6 +14,10 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./hub.component.css']
 })
 export class HubComponent implements AfterViewInit, OnDestroy {
+  feedError: string | undefined;
+  fetchFeeds() {
+    throw new Error('Method not implemented.');
+  }
   isDarkMode = false;
   newMessage = '';
   isMenuOpen = false;
@@ -136,7 +140,6 @@ export class HubComponent implements AfterViewInit, OnDestroy {
     this.http.post('http://localhost:3000/angular', { username: this.user.name })
       .subscribe(response => {
         console.log('Framework added to user:', response);
-        // Optionally update the userFrameworks locally
         if (!this.user.userFrameworks.includes('Angular')) {
           this.user.userFrameworks.push('Angular');
         }
