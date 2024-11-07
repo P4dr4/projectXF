@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import Chart from 'chart.js/auto';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { AuthService } from '../services/auth.service'; // Import AuthService
+import { AuthService } from '../services/auth.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './hub.component.html',
   styleUrls: ['./hub.component.css']
 })
+
 export class HubComponent implements AfterViewInit, OnDestroy {
   feedError: string | undefined;
   fetchFeeds() {
@@ -26,7 +27,7 @@ export class HubComponent implements AfterViewInit, OnDestroy {
 
   user: any = {
     avatar: '',
-    name: '', // Initialize as empty
+    name: '', 
     bio: 'Engineer',
     location: 'San Francisco, CA',
     website: 'dev.site',
@@ -36,7 +37,7 @@ export class HubComponent implements AfterViewInit, OnDestroy {
       following: 890
     },
     badges: ['Pro User', 'Top Contributor', 'Early Adopter'],
-    userFrameworks: [] as string[] // Ensure it's typed as an array
+    userFrameworks: [] as string[]
   };
 
   feed = [
@@ -132,7 +133,7 @@ export class HubComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-  addFrameworkToUser(): void {
+  addAngularFrameworkToUser(): void {
     if (!this.user.name) {
       console.log('No user is logged in.');
       return;
@@ -142,6 +143,38 @@ export class HubComponent implements AfterViewInit, OnDestroy {
         console.log('Framework added to user:', response);
         if (!this.user.userFrameworks.includes('Angular')) {
           this.user.userFrameworks.push('Angular');
+        }
+      }, error => {
+        console.error('Error adding framework:', error);
+      });
+  }
+
+  addReactFrameworkToUser(): void {
+    if (!this.user.name) {
+      console.log('No user is logged in.');
+      return;
+    }
+    this.http.post('http://localhost:3000/react', { username: this.user.name })
+      .subscribe(response => {
+        console.log('Framework added to user:', response);
+        if (!this.user.userFrameworks.includes('React')) {
+          this.user.userFrameworks.push('React');
+        }
+      }, error => {
+        console.error('Error adding framework:', error);
+      });
+  }
+
+  addVueFrameworkToUser(): void {
+    if (!this.user.name) {
+      console.log('No user is logged in.');
+      return;
+    }
+    this.http.post('http://localhost:3000/vue', { username: this.user.name })
+      .subscribe(response => {
+        console.log('Framework added to user:', response);
+        if (!this.user.userFrameworks.includes('Vue')) {
+          this.user.userFrameworks.push('Vue');
         }
       }, error => {
         console.error('Error adding framework:', error);

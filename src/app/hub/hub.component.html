@@ -87,6 +87,8 @@
 
   <!-- 3. Add Framework Button: Visible only when logged in -->
   <div *ngIf="user.name">
-    <button (click)="addFrameworkToUser()">Add Angular Framework</button>
+    <button (click)="addAngularFrameworkToUser()">Add Angular Framework</button>
+    <button (click)="addReactFrameworkToUser()">Add React Framework</button>
+    <button (click)="addVueFrameworkToUser()">Add Vue Framework</button>
   </div>
 </div>
