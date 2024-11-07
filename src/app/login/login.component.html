@@ -21,7 +21,11 @@
   </section>
 
   <footer class="login-footer">
-    <p>Don't have an account? <button (click)="goToSignup()">Sign Up Here</button></p>
-    <button (click)="goToHome()">Back to Home</button>
+    <p>Don't have an account? 
+      <a class="link-button" (click)="goToSignup()">Sign Up Here</a>
+    </p>
+    <a class="secondary-button" (click)="goToHome()">
+      <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
   </footer>
 </div>

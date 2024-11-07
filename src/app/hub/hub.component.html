@@ -4,91 +4,137 @@
     <p>Stay updated with the latest activities and notifications on ProjectXF Hub.</p>
   </header>
 
-  <nav class="navbar">
-    <a class="nav-link" href="#profile">
-      <i class="fas fa-user"></i> Profile
-    </a>
-    <a class="nav-link" href="#feed">
-      <i class="fas fa-stream"></i> Feed
-    </a>
-    <a class="nav-link" href="#activity">
-      <i class="fas fa-chart-line"></i> Activity
-    </a>
-    <a class="nav-link" href="#notifications">
-      <i class="fas fa-bell"></i> Notifications
-    </a>
-    <a class="nav-link" href="#chat">
-      <i class="fas fa-comments"></i> Chat
-    </a>
-  </nav>
+  <!-- Adjust main content -->
+  <div class="main-content">
+    <!-- Existing hub-details -->
+    <div class="hub-details" *ngIf="user.name">
+      <section id="profile" class="hub-card">
+        <img [src]="user.avatar || 'assets/default-avatar.png'" alt="Profile" class="avatar">
+        <h2>{{ user.name }}</h2>
+        <p>{{ user.bio }}</p>
+        <p>{{ user.location }}</p>
+        <a [href]="user.website" target="_blank">{{ user.website }}</a>
+      </section>
 
-  <!-- Existing hub-details -->
-  <div class="hub-details" *ngIf="user.name">
-    <section id="profile" class="hub-card">
-      <img [src]="user.avatar || 'assets/default-avatar.png'" alt="Profile" class="avatar">
-      <h2>{{ user.name }}</h2>
-      <p>{{ user.bio }}</p>
-      <p>{{ user.location }}</p>
-      <a [href]="user.website" target="_blank">{{ user.website }}</a>
-    </section>
-
-    <section id="feed" class="hub-card">
-      <h2>Activity Feed</h2>
-      <div *ngFor="let item of feed" class="feed-item">
-        <p>{{ item.content }}</p>
-        <small>{{ item.timestamp }}</small>
-      </div>
-    </section>
-
-    <section id="activity" class="hub-card">
-      <h2>User Activity</h2>
-      <canvas id="activityChart"></canvas>
-    </section>
-
-    <section id="notifications" class="hub-card">
-      <h2>Notifications</h2>
-      <ul>
-        <li *ngFor="let notification of notifications" (click)="showNotificationDetails(notification)">
-          {{ notification }}
-        </li>
-      </ul>
-    </section>
-
-    <section id="chat" class="hub-card">
-      <h2>Chat</h2>
-      <div class="chat-messages">
-        <div *ngFor="let message of chatMessages" class="chat-message">
-          <strong>{{ message.user }}:</strong> {{ message.text }}
-          <small>{{ message.timestamp }}</small>
+      <section id="feed" class="hub-card">
+        <h2>Activity Feed</h2>
+        <div *ngFor="let item of feed" class="feed-item">
+          <p>{{ item.content }}</p>
+          <small>{{ item.timestamp }}</small>
         </div>
+      </section>
+
+      <section id="activity" class="hub-card">
+        <h2>User Activity</h2>
+        <canvas id="activityChart"></canvas>
+      </section>
+
+      <section id="notifications" class="hub-card">
+        <h2>Notifications</h2>
+        <ul>
+          <li *ngFor="let notification of notifications" (click)="showNotificationDetails(notification)">
+            {{ notification }}
+          </li>
+        </ul>
+      </section>
+
+      <section id="chat" class="hub-card">
+        <h2>Chat</h2>
+        <div class="chat-messages">
+          <div *ngFor="let message of chatMessages" class="chat-message">
+            <strong>{{ message.user }}:</strong> {{ message.text }}
+            <small>{{ message.timestamp }}</small>
+          </div>
+        </div>
+        <div class="chat-input-wrapper">
+          <input type="text" [(ngModel)]="newMessage" 
+                 placeholder="Type a message..."
+                 (keyup.enter)="sendMessage()">
+          <button (click)="sendMessage()">
+            <i class="fas fa-paper-plane"></i>
+          </button>
+        </div>
+      </section>
+
+      <section id="frameworks" class="hub-card">
+        <h2>Add Frameworks</h2>
+        <div class="framework-cards-container">
+          <div class="framework-card" (click)="addAngularFrameworkToUser()" [class.active]="user.userFrameworks.includes('Angular')">
+            <div class="framework-icon">
+              <i class="fab fa-angular"></i>
+            </div>
+            <h3>Angular</h3>
+            <p>Build the future of web applications with Angular's powerful features.</p>
+            <div class="framework-stats">
+              <span>2M+ Users</span>
+              <span>96K+ Stars</span>
+            </div>
+          </div>
+
+          <div class="framework-card" (click)="addReactFrameworkToUser()" [class.active]="user.userFrameworks.includes('React')">
+            <div class="framework-icon">
+              <i class="fab fa-react"></i>
+            </div>
+            <h3>React</h3>
+            <p>Create interactive UIs effortlessly with the world's most popular library.</p>
+            <div class="framework-stats">
+              <span>5M+ Users</span>
+              <span>190K+ Stars</span>
+            </div>
+          </div>
+
+          <div class="framework-card" (click)="addVueFrameworkToUser()" [class.active]="user.userFrameworks.includes('Vue')">
+            <div class="framework-icon">
+              <i class="fab fa-vuejs"></i>
+            </div>
+            <h3>Vue</h3>
+            <p>The progressive framework for building modern web interfaces.</p>
+            <div class="framework-stats">
+              <span>3M+ Users</span>
+              <span>200K+ Stars</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Framework Selection Progress -->
+      <div class="framework-progress">
+        <div class="progress-circle" [class.active]="user.userFrameworks.length > 0">
+          {{user.userFrameworks.length}}/3
+        </div>
+        <p>Frameworks Selected</p>
       </div>
-      <div class="chat-input-wrapper">
-        <input type="text" [(ngModel)]="newMessage" 
-               placeholder="Type a message..."
-               (keyup.enter)="sendMessage()">
-        <button (click)="sendMessage()">
-          <i class="fas fa-paper-plane"></i>
+
+      <!-- Quick Actions -->
+      <div class="quick-actions">
+        <button class="action-button">
+          <i class="fas fa-share"></i>
+          Share Profile
+        </button>
+        <button class="action-button">
+          <i class="fas fa-code-branch"></i>
+          View Projects
+        </button>
+        <button class="action-button">
+          <i class="fas fa-users"></i>
+          Find Teams
         </button>
       </div>
-    </section>
-  </div>
-
-  <!-- Existing modals and loaders -->
-  <div id="notificationModal" class="modal">
-    <div class="modal-content">
-      <span class="close" (click)="closeNotificationModal()">&times;</span>
-      <p>{{ selectedNotification }}</p>
     </div>
-  </div>
 
-  <div *ngIf="isLoading" class="loading-spinner">
-    <i class="fas fa-spinner fa-spin"></i>
-  </div>
+    <!-- Existing modals and loaders -->
+    <div id="notificationModal" class="modal">
+      <div class="modal-content">
+        <span class="close" (click)="closeNotificationModal()">&times;</span>
+        <p>{{ selectedNotification }}</p>
+      </div>
+    </div>
 
-  <!-- 3. Add Framework Button: Visible only when logged in -->
-  <div *ngIf="user.name">
-    <button (click)="addAngularFrameworkToUser()">Add Angular Framework</button>
-    <button (click)="addReactFrameworkToUser()">Add React Framework</button>
-    <button (click)="addVueFrameworkToUser()">Add Vue Framework</button>
+    <div *ngIf="isLoading" class="loading-spinner">
+      <i class="fas fa-spinner fa-spin"></i>
+    </div>
+
+    <!-- 3. Add Framework Button: Visible only when logged in -->
+    <!-- Removed buttons -->
   </div>
 </div>
