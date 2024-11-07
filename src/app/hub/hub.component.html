@@ -1,6 +1,6 @@
 <div class="hub-container">
   <header class="hub-header">
-    <h1>Welcome, {{ user.name }}!</h1>
+    <h1>Welcome, {{ user.name || 'Guest' }}!</h1>
     <p>Stay updated with the latest activities and notifications on ProjectXF Hub.</p>
   </header>
 
@@ -22,7 +22,8 @@
     </a>
   </nav>
 
-  <div class="hub-details">
+  <!-- Existing hub-details -->
+  <div class="hub-details" *ngIf="user.name">
     <section id="profile" class="hub-card">
       <img [src]="user.avatar || 'assets/default-avatar.png'" alt="Profile" class="avatar">
       <h2>{{ user.name }}</h2>
@@ -72,6 +73,7 @@
     </section>
   </div>
 
+  <!-- Existing modals and loaders -->
   <div id="notificationModal" class="modal">
     <div class="modal-content">
       <span class="close" (click)="closeNotificationModal()">&times;</span>
@@ -81,5 +83,10 @@
 
   <div *ngIf="isLoading" class="loading-spinner">
     <i class="fas fa-spinner fa-spin"></i>
+  </div>
+
+  <!-- 3. Add Framework Button: Visible only when logged in -->
+  <div *ngIf="user.name">
+    <button (click)="addFrameworkToUser()">Add Angular Framework</button>
   </div>
 </div>
