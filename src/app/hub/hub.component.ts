@@ -1,25 +1,28 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import Chart from 'chart.js/auto';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { AuthService } from '../services/auth.service'; // Import AuthService
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-hub',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, HttpClientModule],
   templateUrl: './hub.component.html',
   styleUrls: ['./hub.component.css']
 })
-export class HubComponent implements AfterViewInit {
+export class HubComponent implements AfterViewInit, OnDestroy {
   isDarkMode = false;
   newMessage = '';
   isMenuOpen = false;
   isLoading = false;
   selectedNotification = '';
 
-  user = {
+  user: any = {
     avatar: '',
-    name: 'Pedro',
+    name: '', // Initialize as empty
     bio: 'Engineer',
     location: 'San Francisco, CA',
     website: 'dev.site',
@@ -28,7 +31,8 @@ export class HubComponent implements AfterViewInit {
       followers: 1432,
       following: 890
     },
-    badges: ['Pro User', 'Top Contributor', 'Early Adopter']
+    badges: ['Pro User', 'Top Contributor', 'Early Adopter'],
+    userFrameworks: [] as string[] // Ensure it's typed as an array
   };
 
   feed = [
@@ -48,8 +52,24 @@ export class HubComponent implements AfterViewInit {
     { user: 'John', text: 'Hello Jane!', timestamp: '10:01 AM', avatar: 'assets/john-avatar.png' },
   ];
 
+  private userSubscription: Subscription | undefined;
+
+  constructor(private http: HttpClient, private authService: AuthService) {}
+
   ngAfterViewInit(): void {
     this.initializeChart();
+  }
+
+  ngOnInit(): void {
+    this.userSubscription = this.authService.user$.subscribe(user => {
+      if (user) {
+        this.user = user;
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.userSubscription?.unsubscribe();
   }
 
   toggleTheme(): void {
@@ -102,11 +122,26 @@ export class HubComponent implements AfterViewInit {
       options: {
         responsive: true,
         scales: {
-          y: {
-            beginAtZero: true
-          }
+          y: { beginAtZero: true }
         }
       }
     });
+  }
+
+  addFrameworkToUser(): void {
+    if (!this.user.name) {
+      console.log('No user is logged in.');
+      return;
+    }
+    this.http.post('http://localhost:3000/angular', { username: this.user.name })
+      .subscribe(response => {
+        console.log('Framework added to user:', response);
+        // Optionally update the userFrameworks locally
+        if (!this.user.userFrameworks.includes('Angular')) {
+          this.user.userFrameworks.push('Angular');
+        }
+      }, error => {
+        console.error('Error adding framework:', error);
+      });
   }
 }
