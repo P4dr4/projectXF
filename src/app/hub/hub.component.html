@@ -59,39 +59,81 @@
       <section id="frameworks" class="hub-card">
         <h2>Add Frameworks</h2>
         <div class="framework-cards-container">
-          <div class="framework-card" (click)="addAngularFrameworkToUser()" [class.active]="user.userFrameworks.includes('Angular')">
-            <div class="framework-icon">
-              <i class="fab fa-angular"></i>
+          <div class="framework-card" [class.active]="user.userFrameworks.includes('Angular')">
+            <div class="framework-content">
+              <div class="framework-icon">
+                <i class="fab fa-angular"></i>
+              </div>
+              <h3>Angular</h3>
+              <p>Build the future of web applications with Angular's powerful features.</p>
+              <div class="framework-stats">
+                <span>2M+ Users</span>
+                <span>96K+ Stars</span>
+              </div>
             </div>
-            <h3>Angular</h3>
-            <p>Build the future of web applications with Angular's powerful features.</p>
-            <div class="framework-stats">
-              <span>2M+ Users</span>
-              <span>96K+ Stars</span>
+            <div class="framework-actions" (click)="$event.stopPropagation()">
+              <input type="text" 
+                     [(ngModel)]="angularRepoName" 
+                     placeholder="Repository name" 
+                     class="repo-input">
+              <button (click)="addAngularFrameworkToUser()" 
+                      [disabled]="isCreatingAngularRepo" 
+                      class="action-button">
+                {{ isCreatingAngularRepo ? 'Creating...' : 'Create Angular Repo' }}
+              </button>
+              <p class="feedback-message">{{ angularFeedbackMessage }}</p>
             </div>
           </div>
 
-          <div class="framework-card" (click)="addReactFrameworkToUser()" [class.active]="user.userFrameworks.includes('React')">
-            <div class="framework-icon">
-              <i class="fab fa-react"></i>
+          <div class="framework-card" [class.active]="user.userFrameworks.includes('React')">
+            <div class="framework-content">
+              <div class="framework-icon">
+                <i class="fab fa-react"></i>
+              </div>
+              <h3>React</h3>
+              <p>Create interactive UIs effortlessly with the world's most popular library.</p>
+              <div class="framework-stats">
+                <span>5M+ Users</span>
+                <span>190K+ Stars</span>
+              </div>
             </div>
-            <h3>React</h3>
-            <p>Create interactive UIs effortlessly with the world's most popular library.</p>
-            <div class="framework-stats">
-              <span>5M+ Users</span>
-              <span>190K+ Stars</span>
+            <div class="framework-actions" (click)="$event.stopPropagation()">
+              <input type="text" 
+                     [(ngModel)]="reactRepoName" 
+                     placeholder="Repository name" 
+                     class="repo-input">
+              <button (click)="addReactFrameworkToUser()" 
+                      [disabled]="isCreatingReactRepo" 
+                      class="action-button">
+                {{ isCreatingReactRepo ? 'Creating...' : 'Create React Repo' }}
+              </button>
+              <p class="feedback-message">{{ reactFeedbackMessage }}</p>
             </div>
           </div>
 
-          <div class="framework-card" (click)="addVueFrameworkToUser()" [class.active]="user.userFrameworks.includes('Vue')">
-            <div class="framework-icon">
-              <i class="fab fa-vuejs"></i>
+          <div class="framework-card" [class.active]="user.userFrameworks.includes('Vue')">
+            <div class="framework-content">
+              <div class="framework-icon">
+                <i class="fab fa-vuejs"></i>
+              </div>
+              <h3>Vue</h3>
+              <p>The progressive framework for building modern web interfaces.</p>
+              <div class="framework-stats">
+                <span>3M+ Users</span>
+                <span>200K+ Stars</span>
+              </div>
             </div>
-            <h3>Vue</h3>
-            <p>The progressive framework for building modern web interfaces.</p>
-            <div class="framework-stats">
-              <span>3M+ Users</span>
-              <span>200K+ Stars</span>
+            <div class="framework-actions" (click)="$event.stopPropagation()">
+              <input type="text" 
+                     [(ngModel)]="vueRepoName" 
+                     placeholder="Repository name" 
+                     class="repo-input">
+              <button (click)="addVueFrameworkToUser()" 
+                      [disabled]="isCreatingVueRepo" 
+                      class="action-button">
+                {{ isCreatingVueRepo ? 'Creating...' : 'Create Vue Repo' }}
+              </button>
+              <p class="feedback-message">{{ vueFeedbackMessage }}</p>
             </div>
           </div>
         </div>

@@ -5,6 +5,7 @@ import Chart from 'chart.js/auto';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
 import { Subscription } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-hub',
@@ -25,6 +26,15 @@ export class HubComponent implements AfterViewInit, OnDestroy {
   isLoading = false;
   selectedNotification = '';
   newRepositoryName = '';
+  angularRepoName = '';
+  isCreatingAngularRepo = false;
+  angularFeedbackMessage = '';
+  reactRepoName = '';
+  vueRepoName = '';
+  isCreatingReactRepo = false;
+  isCreatingVueRepo = false;
+  reactFeedbackMessage = '';
+  vueFeedbackMessage = '';
 
   user: any = {
     avatar: '',
@@ -139,15 +149,29 @@ export class HubComponent implements AfterViewInit, OnDestroy {
       console.log('No user is logged in.');
       return;
     }
-    this.http.post('http://localhost:3000/angular', { username: this.user.name })
-      .subscribe(response => {
-        console.log('Framework added to user:', response);
-        if (!this.user.userFrameworks.includes('Angular')) {
-          this.user.userFrameworks.push('Angular');
-        }
-      }, error => {
-        console.error('Error adding framework:', error);
-      });
+    if (!this.angularRepoName.trim()) {
+      this.angularFeedbackMessage = 'Please enter a repository name.';
+      return;
+    }
+    this.isCreatingAngularRepo = true;
+    this.angularFeedbackMessage = 'Creating Angular repository...';
+    this.http.post('http://localhost:3000/angular', { 
+      username: this.user.name, 
+      repository: this.angularRepoName 
+    })
+    .subscribe(response => {
+      console.log('Framework added to user and repository created:', response);
+      if (!this.user.userFrameworks.includes('Angular')) {
+        this.user.userFrameworks.push('Angular');
+      }
+      this.angularFeedbackMessage = 'Angular repository created successfully.';
+      this.isCreatingAngularRepo = false;
+      this.angularRepoName = '';
+    }, error => {
+      console.error('Error adding framework:', error);
+      this.angularFeedbackMessage = 'Error creating Angular repository.';
+      this.isCreatingAngularRepo = false;
+    });
   }
 
   addReactFrameworkToUser(): void {
@@ -155,15 +179,29 @@ export class HubComponent implements AfterViewInit, OnDestroy {
       console.log('No user is logged in.');
       return;
     }
-    this.http.post('http://localhost:3000/react', { username: this.user.name })
-      .subscribe(response => {
-        console.log('Framework added to user:', response);
-        if (!this.user.userFrameworks.includes('React')) {
-          this.user.userFrameworks.push('React');
-        }
-      }, error => {
-        console.error('Error adding framework:', error);
-      });
+    if (!this.reactRepoName.trim()) {
+      this.reactFeedbackMessage = 'Please enter a repository name.';
+      return;
+    }
+    this.isCreatingReactRepo = true;
+    this.reactFeedbackMessage = 'Creating React repository...';
+    this.http.post('http://localhost:3000/react', { 
+      username: this.user.name,
+      repository: this.reactRepoName
+    })
+    .subscribe(response => {
+      console.log('Framework added to user and repository created:', response);
+      if (!this.user.userFrameworks.includes('React')) {
+        this.user.userFrameworks.push('React');
+      }
+      this.reactFeedbackMessage = 'React repository created successfully.';
+      this.isCreatingReactRepo = false;
+      this.reactRepoName = '';
+    }, error => {
+      console.error('Error adding framework:', error);
+      this.reactFeedbackMessage = 'Error creating React repository.';
+      this.isCreatingReactRepo = false;
+    });
   }
 
   addVueFrameworkToUser(): void {
@@ -171,15 +209,29 @@ export class HubComponent implements AfterViewInit, OnDestroy {
       console.log('No user is logged in.');
       return;
     }
-    this.http.post('http://localhost:3000/vue', { username: this.user.name })
-      .subscribe(response => {
-        console.log('Framework added to user:', response);
-        if (!this.user.userFrameworks.includes('Vue')) {
-          this.user.userFrameworks.push('Vue');
-        }
-      }, error => {
-        console.error('Error adding framework:', error);
-      });
+    if (!this.vueRepoName.trim()) {
+      this.vueFeedbackMessage = 'Please enter a repository name.';
+      return;
+    }
+    this.isCreatingVueRepo = true;
+    this.vueFeedbackMessage = 'Creating Vue repository...';
+    this.http.post('http://localhost:3000/vue', { 
+      username: this.user.name,
+      repository: this.vueRepoName
+    })
+    .subscribe(response => {
+      console.log('Framework added to user and repository created:', response);
+      if (!this.user.userFrameworks.includes('Vue')) {
+        this.user.userFrameworks.push('Vue');
+      }
+      this.vueFeedbackMessage = 'Vue repository created successfully.';
+      this.isCreatingVueRepo = false;
+      this.vueRepoName = '';
+    }, error => {
+      console.error('Error adding framework:', error);
+      this.vueFeedbackMessage = 'Error creating Vue repository.';
+      this.isCreatingVueRepo = false;
+    });
   }
 
   createGithubRepository(): void {

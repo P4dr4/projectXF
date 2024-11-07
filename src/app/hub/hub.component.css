@@ -893,6 +893,8 @@ button:hover {
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .framework-card::before {
@@ -937,6 +939,30 @@ button:hover {
   margin-top: 15px;
   position: relative;
   z-index: 1;
+}
+
+.framework-actions {
+  padding: 1rem;
+  pointer-events: auto;
+}
+
+.framework-actions input,
+.framework-actions button {
+  pointer-events: auto;
+  z-index: 1;
+  position: relative;
+}
+
+.repo-input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.framework-content {
+  flex: 1;
 }
 
 /* Add these new styles for enhanced immersion */
