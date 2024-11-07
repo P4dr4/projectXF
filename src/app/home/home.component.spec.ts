@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { HomeComponent } from './home.component';
 
@@ -11,13 +11,14 @@ describe('HomeComponent', () => {
   let fixture: ComponentFixture<HomeComponent>;
   let router: MockRouter;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [],
-      declarations: [HomeComponent],
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [HomeComponent], // Ensure HomeComponent is standalone
       providers: [{ provide: Router, useClass: MockRouter }],
     }).compileComponents();
+  }));
 
+  beforeEach(() => {
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
     router = TestBed.inject(Router) as any;
@@ -41,4 +42,5 @@ describe('HomeComponent', () => {
     component.goToHome();
     expect(router.navigate).toHaveBeenCalledWith(['']);
   });
+
 });

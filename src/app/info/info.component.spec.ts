@@ -1,9 +1,9 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { InfoComponent } from './info.component';
 
 class MockRouter {
-  navigate = jasmine.createSpy('navigate');
+  navigate = jasmine.createSpy('navigate').and.returnValue(Promise.resolve(true));
 }
 
 describe('InfoComponent', () => {
@@ -11,15 +11,18 @@ describe('InfoComponent', () => {
   let fixture: ComponentFixture<InfoComponent>;
   let router: MockRouter;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
       imports: [InfoComponent],
       providers: [{ provide: Router, useClass: MockRouter }],
     }).compileComponents();
+  }));
 
+  beforeEach(() => {
     fixture = TestBed.createComponent(InfoComponent);
     component = fixture.componentInstance;
     router = TestBed.inject(Router) as any;
+    fixture.detectChanges();
   });
 
   it('should create', () => {
@@ -40,4 +43,5 @@ describe('InfoComponent', () => {
     component.goToHome();
     expect(router.navigate).toHaveBeenCalledWith(['']);
   });
+;
 });

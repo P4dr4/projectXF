@@ -13,6 +13,9 @@ import { AuthService, User } from '../services/auth.service'; // Import User int
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+  loginError(loginError: any) {
+    throw new Error('Method not implemented.');
+  }
   username: string = ''; // Keep this empty for user input
   password: string = '';
 

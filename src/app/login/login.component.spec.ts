@@ -53,4 +53,9 @@ describe('LoginComponent', () => {
     expect(console.log).toHaveBeenCalledWith('Attempting login with username: testUser and password: testPassword');
   });
 
+  afterEach(() => {
+    if (httpMock) {
+      httpMock.verify();
+    }
+  });
 });
