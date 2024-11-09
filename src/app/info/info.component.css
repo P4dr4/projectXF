@@ -6,7 +6,7 @@
   justify-content: center;
   min-height: 100vh;
   padding: 20px;
-  background: linear-gradient(135deg, #ff7e5f, #feb47b);
+  background: linear-gradient(135deg, #614385, #516395);
   color: #fff;
   text-align: center;
   font-family: 'Roboto', sans-serif;
@@ -38,14 +38,33 @@
 }
 
 .info-card {
-  background: #fff;
-  color: #333;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
   border-radius: 15px;
   padding: 25px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   max-width: 350px;
   text-align: center;
   transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.info-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 15px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.info-card:hover::before {
+  opacity: 1;
 }
 
 .info-card:hover {
@@ -57,6 +76,11 @@
   font-size: 1.8rem;
   margin-bottom: 15px;
   color: #ff7e5f;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #614385, #516395);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .info-card p {
@@ -72,6 +96,20 @@
 
 .info-card ul li {
   margin-bottom: 10px;
+  position: relative;
+  padding-left: 20px;
+}
+
+.info-card ul li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: #614385;
+  transition: transform 0.3s ease;
+}
+
+.info-card ul li:hover::before {
+  transform: translateX(5px);
 }
 
 /* Icon Styling */
@@ -79,6 +117,12 @@
   font-size: 3rem;
   margin-bottom: 10px;
   color: #ff7e5f;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+  transition: transform 0.3s ease;
+}
+
+.info-card:hover .icon {
+  transform: scale(1.1) rotate(5deg);
 }
 
 .mission {
@@ -99,7 +143,9 @@
 }
 
 button {
-  background: linear-gradient(135deg, #ff7e5f, #feb47b);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   color: #fff;
   border: none;
   border-radius: 25px;
@@ -111,8 +157,9 @@ button {
 }
 
 button:hover {
-  background: linear-gradient(135deg, #feb47b, #ff7e5f);
+  background: rgba(255, 255, 255, 0.2);
   transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 /* Animations */
@@ -169,5 +216,11 @@ button:hover {
   button {
     padding: 10px 20px;
     font-size: 0.9rem;
+  }
+}
+
+@media (hover: hover) {
+  .info-card:hover {
+    transform: translateY(-10px) scale(1.02);
   }
 }
