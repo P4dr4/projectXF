@@ -1,21 +1,71 @@
 <div class="home-container">
-    <header class="home-header">
-      <h1>Welcome to ProjectXF</h1>
-      <p>Your one-stop platform for <b>Development & Automation</b></p>
-    </header>
-  
-    <section class="home-cards">
-      <div class="card">
-        <h2>Get Started</h2>
-        <p>Explore our features and start your journey today!</p>
-        <button (click)="goToInfo()">Learn More</button>
+  <header class="home-header">
+    <h1>Welcome to ProjectXF</h1>
+    <p>Your one-stop platform for <span class="highlight">Development & Automation</span></p>
+    <div class="header-badges">
+      <span class="badge">Innovative</span>
+      <span class="badge">Powerful</span>
+      <span class="badge">Seamless</span>
+    </div>
+  </header>
+
+  <section class="home-cards">
+    <div class="card info-card" (click)="goToInfo()">
+      <div class="card-icon">
+        <i class="fas fa-rocket"></i>
       </div>
-      
-      <div class="card">
-        <h2>Already a Member?</h2>
-        <p>Log in to access your dashboard and manage your projects.</p>
-        <button (click)="goToLogin()">Log In</button>
+      <h2>Get Started</h2>
+      <p>Explore our features and start your journey today!</p>
+      <ul class="feature-list">
+        <li><i class="fas fa-check"></i> Modern Development Tools</li>
+        <li><i class="fas fa-check"></i> Smart Automation</li>
+        <li><i class="fas fa-check"></i> Team Collaboration</li>
+      </ul>
+      <button class="action-btn">Learn More</button>
+    </div>
+    
+    <div class="card login-card" (click)="goToLogin()">
+      <div class="card-icon">
+        <i class="fas fa-user-circle"></i>
       </div>
-    </section>
-  </div>
-  
+      <h2>Already a Member?</h2>
+      <p>Log in to access your dashboard and manage your projects.</p>
+      <div class="benefits">
+        <span>✨ Personal Dashboard</span>
+        <span>🚀 Project Management</span>
+        <span>🤝 Team Collaboration</span>
+      </div>
+      <button class="action-btn">Log In</button>
+    </div>
+  </section>
+
+  <section class="features-section">
+    <h2>Why Choose ProjectXF?</h2>
+    <div class="features-grid">
+      <div class="feature-item">
+        <i class="fas fa-code"></i>
+        <h3>Modern Tech Stack</h3>
+        <p>Built with cutting-edge technologies</p>
+      </div>
+      <div class="feature-item">
+        <i class="fas fa-robot"></i>
+        <h3>Smart Automation</h3>
+        <p>Automate your workflow effortlessly</p>
+      </div>
+      <div class="feature-item">
+        <i class="fas fa-users"></i>
+        <h3>Team Collaboration</h3>
+        <p>Work together seamlessly</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="home-footer">
+    <p>Start your journey with ProjectXF today!</p>
+    <div class="social-links">
+      <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+      <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+      <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
+    </div>
+  </footer>
+</div>
