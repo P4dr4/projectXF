@@ -146,31 +146,47 @@ export class HubComponent implements AfterViewInit, OnDestroy {
 
   addAngularFrameworkToUser(): void {
     if (!this.user.name) {
-      console.log('No user is logged in.');
+      this.angularFeedbackMessage = 'Please log in first.';
       return;
     }
     if (!this.angularRepoName.trim()) {
       this.angularFeedbackMessage = 'Please enter a repository name.';
       return;
     }
+  
     this.isCreatingAngularRepo = true;
     this.angularFeedbackMessage = 'Creating Angular repository...';
+  
+    if (!this.user.userFrameworks) {
+      this.user.userFrameworks = [];  // Initialize if undefined
+    }
+  
     this.http.post('http://localhost:3000/angular', { 
       username: this.user.name, 
       repository: this.angularRepoName 
     })
-    .subscribe(response => {
-      console.log('Framework added to user and repository created:', response);
-      if (!this.user.userFrameworks.includes('Angular')) {
-        this.user.userFrameworks.push('Angular');
+    .subscribe({
+      next: (response: any) => {
+        console.log('Repository created:', response);
+        
+        if (response.success) {
+          if (!this.user.userFrameworks.includes('Angular')) {
+            this.user.userFrameworks.push('Angular');
+          }
+          const repoUrl = response.data?.url || `https://github.com/${this.user.name}/${this.angularRepoName}`;
+          this.angularFeedbackMessage = `Repository created! View at: ${repoUrl}`;
+        } else {
+          this.angularFeedbackMessage = response.message || 'Error creating repository';
+        }
+        
+        this.isCreatingAngularRepo = false;
+        this.angularRepoName = '';
+      },
+      error: (error) => {
+        console.error('Error:', error);
+        this.angularFeedbackMessage = error.error?.message || 'Error creating repository';
+        this.isCreatingAngularRepo = false;
       }
-      this.angularFeedbackMessage = 'Angular repository created successfully.';
-      this.isCreatingAngularRepo = false;
-      this.angularRepoName = '';
-    }, error => {
-      console.error('Error adding framework:', error);
-      this.angularFeedbackMessage = 'Error creating Angular repository.';
-      this.isCreatingAngularRepo = false;
     });
   }
 
