@@ -1,5 +1,4 @@
-
 export const environment = {
   production: true,
-  apiUrl: '/api'
+  apiBaseUrl: process.env['BACKEND_URL'] || 'http://localhost:3000'
 };
