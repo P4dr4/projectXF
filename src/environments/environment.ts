@@ -1,4 +1,6 @@
+declare const window: any;
+
 export const environment = {
   production: false,
-  apiBaseUrl: 'http://backend:3000'
+  apiBaseUrl: 'http://localhost:3000'
 };
