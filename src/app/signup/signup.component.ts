@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-signup',
@@ -97,7 +98,7 @@ export class SignupComponent implements OnInit {
   onSubmit(): void {
     if (this.signupForm.valid) {
       console.log('Submitting form', this.signupForm.value); // Log form data before sending
-      this.http.post('http://localhost:3000/signup', this.signupForm.value).subscribe(
+      this.http.post(`${environment.apiBaseUrl}/signup`, this.signupForm.value).subscribe(
         response => {
           console.log('Form submitted', response);
           alert('Form submitted successfully!');

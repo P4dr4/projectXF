@@ -3,7 +3,8 @@ import { Router, RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
-import { AuthService, User } from '../services/auth.service'; // Import User interface
+import { AuthService, User } from '../services/auth.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -39,7 +40,7 @@ export class LoginComponent {
 
   onSubmit(): void {
     console.log(`Attempting login with username: ${this.username} and password: ${this.password}`);
-    this.http.post<any>('http://localhost:3000/login', { username: this.username, password: this.password }) // Added type
+    this.http.post<any>(`${environment.apiBaseUrl}/login`, { username: this.username, password: this.password })
       .subscribe(
         response => {
           if (response.message === 'User logged in successfully') { 
