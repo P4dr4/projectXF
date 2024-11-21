@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  Node_CI:
+  Node_CI_Deploy:
     runs-on: ubuntu-latest
 
     steps:
