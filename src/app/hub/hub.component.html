@@ -4,19 +4,43 @@
     <p>Stay updated with the latest activities and notifications on ProjectXF Hub.</p>
   </header>
 
-  <!-- Adjust main content -->
   <div class="main-content">
-    <!-- Existing hub-details -->
-    <div class="hub-details" *ngIf="user.name">
-      <section id="profile" class="hub-card">
+    <div class="tabs">
+      <button [class.active]="selectedTab === 'profile'" (click)="selectedTab = 'profile'">Profile</button>
+      <button [class.active]="selectedTab === 'skills'" (click)="selectedTab = 'skills'">Skills</button>
+      <button [class.active]="selectedTab === 'activity'" (click)="selectedTab = 'activity'">Activity</button>
+      <button [class.active]="selectedTab === 'feed'" (click)="selectedTab = 'feed'">Feed</button>
+      <button [class.active]="selectedTab === 'chat'" (click)="selectedTab = 'chat'">Chat</button>
+    </div>
+
+    <div class="tab-content">
+      <section *ngIf="selectedTab === 'profile'" id="profile" class="hub-card">
         <img [src]="user.avatar || 'assets/default-avatar.png'" alt="Profile" class="avatar">
         <h2>{{ user.name }}</h2>
         <p>{{ user.bio }}</p>
         <p>{{ user.location }}</p>
         <a [href]="user.website" target="_blank">{{ user.website }}</a>
+        <button (click)="followUser('targetUserId')" class="action-button">
+          Follow User
+        </button>
       </section>
 
-      <section id="feed" class="hub-card">
+      <section *ngIf="selectedTab === 'skills'" id="skills" class="hub-card">
+        <h2>Skills</h2>
+        <ul>
+          <li *ngFor="let skill of user.skills">{{ skill }}</li>
+        </ul>
+      </section>
+
+      <section *ngIf="selectedTab === 'activity'" id="recent-activity" class="hub-card">
+        <h2>Recent Activity</h2>
+        <div *ngFor="let activity of recentActivities" class="activity-item">
+          <p>{{ activity.activity }}</p>
+          <small>{{ activity.timestamp }}</small>
+        </div>
+      </section>
+
+      <section *ngIf="selectedTab === 'feed'" id="feed" class="hub-card">
         <h2>Activity Feed</h2>
         <div *ngFor="let item of feed" class="feed-item">
           <p>{{ item.content }}</p>
@@ -24,21 +48,7 @@
         </div>
       </section>
 
-      <section id="activity" class="hub-card">
-        <h2>User Activity</h2>
-        <canvas id="activityChart"></canvas>
-      </section>
-
-      <section id="notifications" class="hub-card">
-        <h2>Notifications</h2>
-        <ul>
-          <li *ngFor="let notification of notifications" (click)="showNotificationDetails(notification)">
-            {{ notification }}
-          </li>
-        </ul>
-      </section>
-
-      <section id="chat" class="hub-card">
+      <section *ngIf="selectedTab === 'chat'" id="chat" class="hub-card">
         <h2>Chat</h2>
         <div class="chat-messages">
           <div *ngFor="let message of chatMessages" class="chat-message">
@@ -56,81 +66,66 @@
         </div>
       </section>
 
-      <section id="frameworks" class="hub-card">
+      <section *ngIf="selectedTab === 'frameworks'" id="frameworks">
         <h2>Add Frameworks</h2>
         <div class="framework-cards-container">
-          <div class="framework-card" [class.active]="user.userFrameworks.includes('Angular')">
-            <div class="framework-content">
-              <div class="framework-icon">
-                <i class="fab fa-angular"></i>
-              </div>
-              <h3>Angular</h3>
-              <p>Build the future of web applications with Angular's powerful features.</p>
-              <div class="framework-stats">
-                <span>2M+ Users</span>
-                <span>96K+ Stars</span>
-              </div>
+          <div class="framework-card"
+               [class.active]="user.userFrameworks.includes('Angular')"
+               (click)="onFrameworkCardClick('Angular')">
+            <div class="framework-icon">
+              <i class="fab fa-angular"></i>
+            </div>
+            <h3>Angular</h3>
+            <p>Build the future of web applications with Angular's powerful features.</p>
+            <div class="framework-stats">
+              <span>2M+ Users</span>
+              <span>96K+ Stars</span>
             </div>
             <div class="framework-actions" (click)="$event.stopPropagation()">
-              <input type="text" 
-                     [(ngModel)]="angularRepoName" 
-                     placeholder="Repository name" 
-                     class="repo-input">
-              <button (click)="addAngularFrameworkToUser()" 
-                      [disabled]="isCreatingAngularRepo" 
-                      class="action-button">
+              <input type="text" [(ngModel)]="angularRepoName" placeholder="Repository name" class="repo-input">
+              <button (click)="addAngularFrameworkToUser()" [disabled]="isCreatingAngularRepo" class="action-button">
                 {{ isCreatingAngularRepo ? 'Creating...' : 'Create Angular Repo' }}
               </button>
               <p class="feedback-message">{{ angularFeedbackMessage }}</p>
             </div>
           </div>
 
-          <div class="framework-card" [class.active]="user.userFrameworks.includes('React')">
-            <div class="framework-content">
-              <div class="framework-icon">
-                <i class="fab fa-react"></i>
-              </div>
-              <h3>React</h3>
-              <p>Create interactive UIs effortlessly with the world's most popular library.</p>
-              <div class="framework-stats">
-                <span>5M+ Users</span>
-                <span>190K+ Stars</span>
-              </div>
+          <div class="framework-card"
+               [class.active]="user.userFrameworks.includes('React')"
+               (click)="onFrameworkCardClick('React')"></div>
+            <div class="framework-icon" style="color: #61DBFB;">
+              <i class="fab fa-react"></i>
+            </div>
+            <h3>React</h3>
+            <p>Create interactive UIs effortlessly with the world's most popular library.</p>
+            <div class="framework-stats">
+              <span>5M+ Users</span>
+              <span>190K+ Stars</span>
             </div>
             <div class="framework-actions" (click)="$event.stopPropagation()">
-              <input type="text" 
-                     [(ngModel)]="reactRepoName" 
-                     placeholder="Repository name" 
-                     class="repo-input">
-              <button (click)="addReactFrameworkToUser()" 
-                      [disabled]="isCreatingReactRepo" 
-                      class="action-button">
+              <input type="text" [(ngModel)]="reactRepoName" placeholder="Repository name" class="repo-input">
+              <button (click)="addReactFrameworkToUser()" [disabled]="isCreatingReactRepo" class="action-button">
                 {{ isCreatingReactRepo ? 'Creating...' : 'Create React Repo' }}
               </button>
               <p class="feedback-message">{{ reactFeedbackMessage }}</p>
             </div>
           </div>
 
-          <div class="framework-card" [class.active]="user.userFrameworks.includes('Vue')">
-            <div class="framework-content">
-              <div class="framework-icon">
-                <i class="fab fa-vuejs"></i>
-              </div>
-              <h3>Vue</h3>
-              <p>The progressive framework for building modern web interfaces.</p>
-              <div class="framework-stats">
-                <span>3M+ Users</span>
-                <span>200K+ Stars</span>
-              </div>
+          <div class="framework-card"
+               [class.active]="user.userFrameworks.includes('Vue')"
+               (click)="onFrameworkCardClick('Vue')">
+            <div class="framework-icon" style="color: #42b983;">
+              <i class="fab fa-vuejs"></i>
+            </div>
+            <h3>Vue</h3>
+            <p>The progressive framework for building modern web interfaces.</p>
+            <div class="framework-stats">
+              <span>3M+ Users</span>
+              <span>200K+ Stars</span>
             </div>
             <div class="framework-actions" (click)="$event.stopPropagation()">
-              <input type="text" 
-                     [(ngModel)]="vueRepoName" 
-                     placeholder="Repository name" 
-                     class="repo-input">
-              <button (click)="addVueFrameworkToUser()" 
-                      [disabled]="isCreatingVueRepo" 
-                      class="action-button">
+              <input type="text" [(ngModel)]="vueRepoName" placeholder="Repository name" class="repo-input">
+              <button (click)="addVueFrameworkToUser()" [disabled]="isCreatingVueRepo" class="action-button">
                 {{ isCreatingVueRepo ? 'Creating...' : 'Create Vue Repo' }}
               </button>
               <p class="feedback-message">{{ vueFeedbackMessage }}</p>
@@ -139,7 +134,6 @@
         </div>
       </section>
 
-      <!-- Framework Selection Progress -->
       <div class="framework-progress">
         <div class="progress-circle" [class.active]="user.userFrameworks.length > 0">
           {{user.userFrameworks.length}}/3
@@ -147,7 +141,6 @@
         <p>Frameworks Selected</p>
       </div>
 
-      <!-- Quick Actions -->
       <div class="quick-actions">
         <button class="action-button">
           <i class="fas fa-share"></i>
@@ -174,7 +167,6 @@
       </div>
     </div>
 
-    <!-- Existing modals and loaders -->
     <div id="notificationModal" class="modal">
       <div class="modal-content">
         <span class="close" (click)="closeNotificationModal()">&times;</span>
@@ -186,7 +178,5 @@
       <i class="fas fa-spinner fa-spin"></i>
     </div>
 
-    <!-- 3. Add Framework Button: Visible only when logged in -->
-    <!-- Removed buttons -->
   </div>
 </div>
