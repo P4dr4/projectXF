@@ -34,7 +34,10 @@ jobs:
           sudo apt-get install -y libnss3 libgconf-2-4
 
       - name: Run tests
-        run: npm test
+        run: |
+          rm -rf package-lock.json node_modules
+          npm install
+          npm test
 
       - name: Build application
         run: npm run build
