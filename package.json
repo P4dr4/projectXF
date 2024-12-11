@@ -6,7 +6,8 @@
     "start": "ng serve --host 0.0.0.0",
     "build": "ng build --output-path=./dist",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test --browsers ChromeHeadless --code-coverage --karma-config ./karma.conf.js"
+    "test": "npm install && ng test --browsers ChromeHeadless --code-coverage --karma-config ./karma.conf.js",
+    "ci-test": "rm -rf package-lock.json node_modules && npm install && ng test --browsers ChromeHeadless --code-coverage --karma-config ./karma.conf.js"
   },
   "private": true,
   "dependencies": {
@@ -44,5 +45,8 @@
   },
   "engines": {
     "node": ">=18.0.0"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-win32-x64-msvc": "^4.28.1"
   }
 }
