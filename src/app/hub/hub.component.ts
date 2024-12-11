@@ -14,7 +14,6 @@ import { catchError } from 'rxjs/operators';
   templateUrl: './hub.component.html',
   styleUrls: ['./hub.component.css']
 })
-
 export class HubComponent implements AfterViewInit, OnDestroy {
   feedError: string | undefined;
   fetchFeeds() {
@@ -35,6 +34,7 @@ export class HubComponent implements AfterViewInit, OnDestroy {
   isCreatingVueRepo = false;
   reactFeedbackMessage = '';
   vueFeedbackMessage = '';
+  selectedTab: string = 'profile';
 
   user: any = {
     avatar: '',
@@ -48,8 +48,14 @@ export class HubComponent implements AfterViewInit, OnDestroy {
       following: 890
     },
     badges: ['Pro User', 'Top Contributor', 'Early Adopter'],
-    userFrameworks: [] as string[]
+    userFrameworks: [] as string[],
+    skills: ['Angular', 'TypeScript', 'HTML', 'CSS'],
   };
+
+  recentActivities = [
+    { activity: 'Created a new repository', timestamp: '2023-10-05' },
+    { activity: 'Started following Jane Doe', timestamp: '2023-10-04' },
+  ];
 
   feed = [
     { id: 1, content: 'Just finished a new project!', timestamp: '2023-10-01' },
@@ -158,7 +164,7 @@ export class HubComponent implements AfterViewInit, OnDestroy {
     this.angularFeedbackMessage = 'Creating Angular repository...';
   
     if (!this.user.userFrameworks) {
-      this.user.userFrameworks = [];  // Initialize if undefined
+      this.user.userFrameworks = [];
     }
   
     this.http.post('http://localhost:3000/angular', { 
@@ -268,5 +274,16 @@ export class HubComponent implements AfterViewInit, OnDestroy {
         console.error('Error creating repository:', error);
       }
     );
+  }
+
+  followUser(targetUserId: string): void {
+  }
+
+  onFrameworkCardClick(framework: string) {
+    if (this.user.userFrameworks.includes(framework)) {
+      this.user.userFrameworks = this.user.userFrameworks.filter((f: string) => f !== framework);
+    } else {
+      this.user.userFrameworks.push(framework);
+    }
   }
 }

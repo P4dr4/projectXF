@@ -9,18 +9,19 @@ import { environment } from '../../environments/environment';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterOutlet, FormsModule, HttpClientModule],
+  imports: [FormsModule, HttpClientModule], 
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+
 export class LoginComponent {
   loginError(loginError: any) {
     throw new Error('Method not implemented.');
   }
-  username: string = ''; // Keep this empty for user input
+  username: string = ''; 
   password: string = '';
 
-  constructor(private router: Router, private http: HttpClient, private authService: AuthService) {} // Inject AuthService
+  constructor(private router: Router, private http: HttpClient, private authService: AuthService) {} 
 
   goToInfo(): void {
     this.router.navigate(['/info']);

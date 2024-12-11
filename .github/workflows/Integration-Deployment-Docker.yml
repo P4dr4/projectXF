@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - development
+      - feature/*
   pull_request:
     branches:
       - main
@@ -33,7 +34,7 @@ jobs:
           sudo apt-get install -y libnss3 libgconf-2-4
 
       - name: Run tests
-        run: npm test
+        run: npm run ci-test
 
       - name: Build application
         run: npm run build
