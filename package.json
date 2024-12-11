@@ -6,7 +6,7 @@
     "start": "ng serve --host 0.0.0.0",
     "build": "ng build --output-path=./dist",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test --browsers ChromeHeadless --code-coverage --karma-config ./karma.conf.js"
+    "test": "rm -rf package-lock.json node_modules && npm install && ng test --browsers ChromeHeadless --code-coverage --karma-config ./karma.conf.js"
   },
   "private": true,
   "dependencies": {
